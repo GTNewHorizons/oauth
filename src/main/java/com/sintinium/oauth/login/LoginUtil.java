@@ -15,6 +15,7 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
 import com.mojang.util.UUIDTypeAdapter;
+
 import cpw.mods.fml.relauncher.ReflectionHelper;
 
 public class LoginUtil {
