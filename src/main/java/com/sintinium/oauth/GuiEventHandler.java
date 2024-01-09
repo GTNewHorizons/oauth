@@ -11,6 +11,7 @@ import net.minecraftforge.client.event.GuiScreenEvent;
 import com.sintinium.oauth.gui.LoginTypeScreen;
 import com.sintinium.oauth.gui.TextWidget;
 import com.sintinium.oauth.login.LoginUtil;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class GuiEventHandler {
