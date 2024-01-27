@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMultiplayer;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.client.event.GuiScreenEvent;
 
 import com.sintinium.oauth.gui.LoginTypeScreen;
@@ -16,7 +17,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class GuiEventHandler {
 
-    private static TextWidget statusText = new TextWidget(10 + 66 + 3, 12, "Status: loading");
+    private static TextWidget statusText = new TextWidget(10 + 66 + 3, 12, I18n.format("oauth.status.loading"));
 
     @SubscribeEvent
     public void multiplayerScreenOpen(GuiScreenEvent.InitGuiEvent.Post event) {
@@ -27,16 +28,16 @@ public class GuiEventHandler {
             // Method addButtonMethod = ObfuscationReflectionHelper.findMethod(Screen.class, "func_230480_a_",
             // Widget.class);
             List<GuiButton> buttonList = new ArrayList<>();
-            GuiButton loginButton = new GuiButton(29183, 10, 6, 66, 20, "Oauth Login");
+            GuiButton loginButton = new GuiButton(29183, 10, 6, 66, 20, I18n.format("oauth.btn.oauth.login"));
             // p_onPress_1_ ->
             buttonList.add(loginButton);
             Thread thread = new Thread(() -> {
                 boolean isOnline = LoginUtil.isOnline();
                 if (isOnline) {
-                    statusText.setText("Status: online");
+                    statusText.setText(I18n.format("oauth.status.online"));
                     statusText.setColor(0x55FF55);
                 } else {
-                    statusText.setText("Status: offline");
+                    statusText.setText(I18n.format("oauth.status.offline"));
                     statusText.setColor(0xFF5555);
                 }
             });

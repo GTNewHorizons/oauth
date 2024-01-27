@@ -10,6 +10,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.resources.I18n;
 
 import org.lwjgl.input.Keyboard;
 
@@ -25,7 +26,7 @@ public class LoginScreen extends GuiScreenCustom {
     private OAuthCheckbox savePasswordWidget;
     private GuiTextField usernameWidget;
     private AtomicReference<String> status = new AtomicReference<>();
-    private String title = "OAuth Login";
+    private String title = I18n.format("oauth.screen.title.mojang");
 
     private List<Runnable> toRun = new CopyOnWriteArrayList<>();
 
@@ -90,9 +91,10 @@ public class LoginScreen extends GuiScreenCustom {
         this.savePasswordWidget = this.addButton(
                 new OAuthCheckbox(
                         4,
-                        this.width / 2 - this.fontRendererObj.getStringWidth("Save password") - 25,
+                        this.width / 2 - this.fontRendererObj.getStringWidth(I18n.format("oauth.text.savepassword"))
+                                - 25,
                         this.height / 2 + 1 + 2,
-                        "Save password",
+                        I18n.format("oauth.text.savepassword"),
                         false));
 
         Runnable savePw = () -> {
@@ -103,34 +105,53 @@ public class LoginScreen extends GuiScreenCustom {
             }
         };
 
-        this.mojangLoginButton = this
-                .addButton(new ResponsiveButton(2, this.width / 2 - 100, this.height / 2 + 36, 200, 20, "Login", () -> {
-                    Thread thread = new Thread(() -> {
-                        if (usernameWidget.getText().isEmpty()) {
-                            toRun.add(() -> this.status.set("Missing username!"));
-                        } else {
-                            Optional<Boolean> didSuccessfullyLogIn = LoginUtil
-                                    .loginMojangOrLegacy(usernameWidget.getText(), passwordWidget.getText());
-                            savePw.run();
-                            if (!didSuccessfullyLogIn.isPresent()) {
-                                toRun.add(() -> this.status.set("You seem to be offline. Check your connection!"));
-                            } else if (!didSuccessfullyLogIn.get()) {
-                                toRun.add(() -> this.status.set("Wrong password or username!"));
-                            } else {
-                                LoginUtil.updateOnlineStatus();
-                                toRun.add(() -> Minecraft.getMinecraft().displayGuiScreen(multiplayerScreen));
-                            }
-                        }
-                    });
-                    thread.start();
-                }, this::updateLoginButton, () -> this.mojangLoginButton.displayString = "Login"));
+        this.mojangLoginButton = this.addButton(
+                new ResponsiveButton(
+                        2,
+                        this.width / 2 - 100,
+                        this.height / 2 + 36,
+                        200,
+                        20,
+                        I18n.format("oauth.btn.login"),
+                        () -> {
+                            Thread thread = new Thread(() -> {
+                                if (usernameWidget.getText().isEmpty()) {
+                                    toRun.add(() -> this.status.set(I18n.format("oauth.text.username.missing")));
+                                } else {
+                                    Optional<Boolean> didSuccessfullyLogIn = LoginUtil
+                                            .loginMojangOrLegacy(usernameWidget.getText(), passwordWidget.getText());
+                                    savePw.run();
+                                    if (!didSuccessfullyLogIn.isPresent()) {
+                                        toRun.add(() -> this.status.set(I18n.format("oauth.text.maybe.offline")));
+                                    } else if (!didSuccessfullyLogIn.get()) {
+                                        toRun.add(
+                                                () -> this.status
+                                                        .set(I18n.format("oauth.text.usernameorpassword.wrong")));
+                                    } else {
+                                        LoginUtil.updateOnlineStatus();
+                                        toRun.add(() -> Minecraft.getMinecraft().displayGuiScreen(multiplayerScreen));
+                                    }
+                                }
+                            });
+                            thread.start();
+                        },
+                        this::updateLoginButton,
+                        () -> this.mojangLoginButton.displayString = I18n.format("oauth.btn.login")));
 
-        this.addButton(new ActionButton(3, this.width / 2 - 100, this.height / 2 + 60, 200, 20, "Cancel", () -> {
-            if (!this.savePasswordWidget.isChecked()) {
-                removeLoginInfo();
-            }
-            Minecraft.getMinecraft().displayGuiScreen(lastScreen);
-        }));
+        this.addButton(
+                new ActionButton(
+                        3,
+                        this.width / 2 - 100,
+                        this.height / 2 + 60,
+                        200,
+                        20,
+                        I18n.format("gui.cancel"),
+                        () -> {
+                            if (!this.savePasswordWidget.isChecked()) {
+                                removeLoginInfo();
+                            }
+                            Minecraft.getMinecraft().displayGuiScreen(lastScreen);
+                        }));
 
         this.cleanUp();
 
@@ -157,9 +178,9 @@ public class LoginScreen extends GuiScreenCustom {
 
     private void updateLoginButton() {
         if (this.passwordWidget.getText().isEmpty()) {
-            this.mojangLoginButton.displayString = "Login Offline";
+            this.mojangLoginButton.displayString = I18n.format("btn.login.offline");
         } else {
-            this.mojangLoginButton.displayString = "Login";
+            this.mojangLoginButton.displayString = I18n.format("btn.login");
         }
     }
 
@@ -208,8 +229,18 @@ public class LoginScreen extends GuiScreenCustom {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawBackground(0);
         drawCenteredString(mc.fontRenderer, title, width / 2, 17, 16777215);
-        drawString(mc.fontRenderer, "Username/Email", this.width / 2 - 100, this.height / 2 - 60 - 12, 10526880);
-        drawString(mc.fontRenderer, "Password", this.width / 2 - 100, this.height / 2 - 20 - 12, 10526880);
+        drawString(
+                mc.fontRenderer,
+                I18n.format("oauth.text.usernameoremail"),
+                this.width / 2 - 100,
+                this.height / 2 - 60 - 12,
+                10526880);
+        drawString(
+                mc.fontRenderer,
+                I18n.format("oauth.text.password"),
+                this.width / 2 - 100,
+                this.height / 2 - 20 - 12,
+                10526880);
 
         if (status.get() != null) {
             drawCenteredString(mc.fontRenderer, status.get(), width / 2, height / 2 + 20, 0xFF0000);

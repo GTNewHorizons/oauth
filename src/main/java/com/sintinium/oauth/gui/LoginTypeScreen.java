@@ -3,6 +3,7 @@ package com.sintinium.oauth.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMultiplayer;
+import net.minecraft.client.resources.I18n;
 
 import com.sintinium.oauth.login.LoginUtil;
 import com.sintinium.oauth.login.MicrosoftLogin;
@@ -28,7 +29,7 @@ public class LoginTypeScreen extends GuiScreenCustom {
                         this.height / 2 - 20 - 2,
                         200,
                         20,
-                        "Mojang Login",
+                        I18n.format("oauth.btn.login.mojang"),
                         () -> { Minecraft.getMinecraft().displayGuiScreen(new LoginScreen(this, lastScreen)); }));
         this.addButton(
                 new ActionButton(
@@ -37,7 +38,7 @@ public class LoginTypeScreen extends GuiScreenCustom {
                         this.height / 2 + 2,
                         200,
                         20,
-                        "Microsoft Login",
+                        I18n.format("oauth.btn.login.microsoft"),
                         () -> {
                             final MicrosoftLogin login = new MicrosoftLogin();
                             LoginLoadingScreen loadingScreen = new LoginLoadingScreen(
@@ -64,7 +65,7 @@ public class LoginTypeScreen extends GuiScreenCustom {
                         this.height / 2 + 60,
                         200,
                         20,
-                        "Cancel",
+                        I18n.format("gui.cancel"),
                         () -> { Minecraft.getMinecraft().displayGuiScreen(lastScreen); }));
     }
 
@@ -82,7 +83,7 @@ public class LoginTypeScreen extends GuiScreenCustom {
         this.drawBackground(0);
         drawCenteredString(
                 Minecraft.getMinecraft().fontRenderer,
-                "Select Account Type",
+                I18n.format("oauth.screen.title"),
                 this.width / 2,
                 this.height / 2 - 60,
                 0xFFFFFF);
