@@ -78,6 +78,7 @@ public class LoginLoadingScreen extends GuiScreenCustom {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawBackground(0);
+        drawCenteredString(mc.fontRenderer, title, width / 2, 17, 16777215);
         drawCenteredString(
                 Minecraft.getMinecraft().fontRenderer,
                 renderText,
