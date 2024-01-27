@@ -5,10 +5,11 @@ import java.util.concurrent.atomic.AtomicReference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 
 public class LoginLoadingScreen extends GuiScreenCustom {
 
-    private String loadingText = "Loading";
+    private String loadingText = I18n.format("oauth.text.loading");
     private int dots = 0;
     private String renderText = loadingText;
 
@@ -17,7 +18,7 @@ public class LoginLoadingScreen extends GuiScreenCustom {
     private int tick = 0;
     private Runnable onCancel;
     private boolean isMicrosoft;
-    private String title = "Logging in";
+    private String title = I18n.format("oauth.screen.title.microsoft");
     private AtomicReference<String> updateText = new AtomicReference<>();
 
     protected LoginLoadingScreen(GuiScreen multiplayerScreen, GuiScreen callingScreen, Runnable onCancel,
@@ -26,7 +27,7 @@ public class LoginLoadingScreen extends GuiScreenCustom {
         this.lastScreen = callingScreen;
         this.onCancel = onCancel;
         this.isMicrosoft = isMicrosoft;
-        updateText.set("Check your browser");
+        updateText.set(I18n.format("oauth.text.check.browser"));
     }
 
     public void updateText(String text) {
@@ -35,10 +36,18 @@ public class LoginLoadingScreen extends GuiScreenCustom {
 
     @Override
     public void initGui() {
-        this.addButton(new ActionButton(0, this.width / 2 - 100, this.height / 2 + 60, 200, 20, "Cancel", () -> {
-            onCancel.run();
-            Minecraft.getMinecraft().displayGuiScreen(lastScreen);
-        }));
+        this.addButton(
+                new ActionButton(
+                        0,
+                        this.width / 2 - 100,
+                        this.height / 2 + 60,
+                        200,
+                        20,
+                        I18n.format("gui.cancel"),
+                        () -> {
+                            onCancel.run();
+                            Minecraft.getMinecraft().displayGuiScreen(lastScreen);
+                        }));
     }
 
     @Override
@@ -69,6 +78,7 @@ public class LoginLoadingScreen extends GuiScreenCustom {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawBackground(0);
+        drawCenteredString(mc.fontRenderer, title, width / 2, 17, 16777215);
         drawCenteredString(
                 Minecraft.getMinecraft().fontRenderer,
                 renderText,
