@@ -41,11 +41,7 @@ public class LoginTypeScreen extends GuiScreenCustom {
                         I18n.format("oauth.btn.login.microsoft"),
                         () -> {
                             final MicrosoftLogin login = new MicrosoftLogin();
-                            LoginLoadingScreen loadingScreen = new LoginLoadingScreen(
-                                    lastScreen,
-                                    this,
-                                    login::cancelLogin,
-                                    true);
+                            LoginLoadingScreen loadingScreen = new LoginLoadingScreen(this, login::cancelLogin, true);
                             login.setUpdateStatusConsumer(loadingScreen::updateText);
                             Thread thread = new Thread(() -> login.login(() -> {
                                 LoginUtil.updateOnlineStatus();

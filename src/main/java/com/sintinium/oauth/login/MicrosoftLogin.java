@@ -316,11 +316,9 @@ public class MicrosoftLogin {
     private static class MsToken {
 
         public String accessToken;
-        public String refreshToken;
 
         public MsToken(String accessToken, String refreshToken) {
             this.accessToken = accessToken;
-            this.refreshToken = refreshToken;
         }
     }
 

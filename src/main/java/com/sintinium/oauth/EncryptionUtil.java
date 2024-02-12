@@ -1,7 +1,6 @@
 package com.sintinium.oauth;
 
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 
 import javax.crypto.Cipher;
@@ -15,12 +14,10 @@ import org.apache.commons.codec.binary.Base64;
 public class EncryptionUtil {
 
     private static Cipher cipher;
-    private static SecureRandom random;
 
     static {
         try {
             cipher = Cipher.getInstance("AES/CTR/NoPadding");
-            random = SecureRandom.getInstance("SHA1PRNG");
         } catch (Exception e) {
             e.printStackTrace();
         }

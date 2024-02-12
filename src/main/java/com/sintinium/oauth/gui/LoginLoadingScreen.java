@@ -13,7 +13,6 @@ public class LoginLoadingScreen extends GuiScreenCustom {
     private int dots = 0;
     private String renderText = loadingText;
 
-    private GuiScreen multiplayerScreen;
     private GuiScreen lastScreen;
     private int tick = 0;
     private Runnable onCancel;
@@ -21,9 +20,7 @@ public class LoginLoadingScreen extends GuiScreenCustom {
     private String title = I18n.format("oauth.screen.title.microsoft");
     private AtomicReference<String> updateText = new AtomicReference<>();
 
-    protected LoginLoadingScreen(GuiScreen multiplayerScreen, GuiScreen callingScreen, Runnable onCancel,
-            boolean isMicrosoft) {
-        this.multiplayerScreen = multiplayerScreen;
+    protected LoginLoadingScreen(GuiScreen callingScreen, Runnable onCancel, boolean isMicrosoft) {
         this.lastScreen = callingScreen;
         this.onCancel = onCancel;
         this.isMicrosoft = isMicrosoft;
