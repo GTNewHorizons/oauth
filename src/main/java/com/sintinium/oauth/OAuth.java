@@ -6,8 +6,12 @@ import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-// The value here should match an entry in the META-INF/mods.toml file
-@Mod(modid = "oauth", name = "OAuth", acceptableRemoteVersions = "*")
+@Mod(
+        modid = "oauth",
+        name = "OAuth",
+        acceptableRemoteVersions = "*",
+        acceptedMinecraftVersions = "[1.7.10]",
+        version = Tags.VERSION)
 public class OAuth {
 
     @Mod.EventHandler
