@@ -19,6 +19,7 @@ public class GuiEventHandler {
 
     private static TextWidget statusText = new TextWidget(10 + 66 + 3, 12, I18n.format("oauth.status.loading"));
 
+    @SuppressWarnings("unchecked")
     @SubscribeEvent
     public void multiplayerScreenOpen(GuiScreenEvent.InitGuiEvent.Post event) {
         if (!(event.gui instanceof GuiMultiplayer)) return;
