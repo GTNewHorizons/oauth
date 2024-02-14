@@ -3,18 +3,16 @@ package com.sintinium.oauth;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-// The value here should match an entry in the META-INF/mods.toml file
-@Mod(modid = "oauth", name = "OAuth", acceptableRemoteVersions = "*")
+@Mod(
+        modid = "oauth",
+        name = "OAuth",
+        acceptableRemoteVersions = "*",
+        acceptedMinecraftVersions = "[1.7.10]",
+        version = Tags.VERSION)
 public class OAuth {
-
-    // Directly reference a log4j logger.
-    private static final Logger LOGGER = LogManager.getLogger();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {

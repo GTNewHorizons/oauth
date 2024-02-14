@@ -76,13 +76,12 @@ public class LoginScreen extends GuiScreenCustom {
                 20);
         this.passwordWidget.setMaxStringLength(128);
 
-        this.usernameWidget = new UsernameFieldWidget(
+        this.usernameWidget = new GuiTextField(
                 this.fontRendererObj,
                 this.width / 2 - 100,
                 this.height / 2 - 60,
                 200,
-                20,
-                passwordWidget);
+                20);
         this.usernameWidget.setFocused(true);
         if (LoginUtil.lastMojangUsername != null) {
             this.usernameWidget.setText(LoginUtil.lastMojangUsername);
@@ -170,10 +169,6 @@ public class LoginScreen extends GuiScreenCustom {
 
     private void removeLoginInfo() {
         OAuthConfig.removeUsernamePassword();
-    }
-
-    private void onEdited(int id, String value) {
-        this.cleanUp();
     }
 
     private void updateLoginButton() {

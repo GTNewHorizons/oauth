@@ -6,7 +6,6 @@ public class ResponsiveButton extends ActionButton {
 
     private Runnable onHover;
     private Runnable onUnhover;
-    private boolean wasHovered = false;
 
     public ResponsiveButton(int buttonId, int x, int y, int width, int height, String text, Runnable onClick,
             Runnable onHover, Runnable onUnhover) {

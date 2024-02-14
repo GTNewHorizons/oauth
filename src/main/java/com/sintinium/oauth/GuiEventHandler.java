@@ -19,10 +19,10 @@ public class GuiEventHandler {
 
     private static TextWidget statusText = new TextWidget(10 + 66 + 3, 12, I18n.format("oauth.status.loading"));
 
+    @SuppressWarnings("unchecked")
     @SubscribeEvent
     public void multiplayerScreenOpen(GuiScreenEvent.InitGuiEvent.Post event) {
         if (!(event.gui instanceof GuiMultiplayer)) return;
-        GuiMultiplayer multiplayerScreen = (GuiMultiplayer) event.gui;
         try {
             // Method addButtonMethod = ObfuscationReflectionHelper.findMethod(Screen.class, "addButton", Widget.class);
             // Method addButtonMethod = ObfuscationReflectionHelper.findMethod(Screen.class, "func_230480_a_",
