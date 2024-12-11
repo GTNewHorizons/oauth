@@ -2,6 +2,8 @@ package com.sintinium.oauth.gui;
 
 import net.minecraft.client.gui.GuiScreen;
 
+import org.lwjgl.opengl.GL11;
+
 public class TextWidget {
 
     private final int x;
@@ -24,6 +26,9 @@ public class TextWidget {
     }
 
     public void draw(GuiScreen screen) {
+        GL11.glPushAttrib(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_LIGHTING);
         screen.drawString(screen.mc.fontRenderer, text, x, y, color);
+        GL11.glPopAttrib();
     }
 }
