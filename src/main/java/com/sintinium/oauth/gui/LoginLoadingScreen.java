@@ -2,25 +2,23 @@ package com.sintinium.oauth.gui;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 
-public class LoginLoadingScreen extends GuiScreenCustom {
+public class LoginLoadingScreen extends GuiScreen {
 
-    private String loadingText = I18n.format("oauth.text.loading");
+    private final String loadingText = I18n.format("oauth.text.loading");
     private int dots = 0;
     private String renderText = loadingText;
 
-    private GuiScreen lastScreen;
+    private final GuiScreen lastScreen;
     private int tick = 0;
-    private Runnable onCancel;
-    private boolean isMicrosoft;
-    private String title = I18n.format("oauth.screen.title.microsoft");
-    private AtomicReference<String> updateText = new AtomicReference<>();
+    private final Runnable onCancel;
+    private final boolean isMicrosoft;
+    private final String title = I18n.format("oauth.screen.title.microsoft");
+    private final AtomicReference<String> updateText = new AtomicReference<>();
 
-    protected LoginLoadingScreen(GuiScreen callingScreen, Runnable onCancel, boolean isMicrosoft) {
+    public LoginLoadingScreen(GuiScreen callingScreen, Runnable onCancel, boolean isMicrosoft) {
         this.lastScreen = callingScreen;
         this.onCancel = onCancel;
         this.isMicrosoft = isMicrosoft;
@@ -33,7 +31,7 @@ public class LoginLoadingScreen extends GuiScreenCustom {
 
     @Override
     public void initGui() {
-        this.addButton(
+        buttonList.add(
                 new ActionButton(
                         0,
                         this.width / 2 - 100,
@@ -43,17 +41,8 @@ public class LoginLoadingScreen extends GuiScreenCustom {
                         I18n.format("gui.cancel"),
                         () -> {
                             onCancel.run();
-                            Minecraft.getMinecraft().displayGuiScreen(lastScreen);
+                            mc.displayGuiScreen(lastScreen);
                         }));
-    }
-
-    @Override
-    protected void actionPerformed(GuiButton button) {
-        if (button instanceof ActionButton) {
-            ((ActionButton) button).onClicked();
-        } else {
-            throw new RuntimeException("Missing button action");
-        }
     }
 
     @Override
@@ -76,19 +65,9 @@ public class LoginLoadingScreen extends GuiScreenCustom {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawBackground(0);
         drawCenteredString(mc.fontRenderer, title, width / 2, 17, 16777215);
-        drawCenteredString(
-                Minecraft.getMinecraft().fontRenderer,
-                renderText,
-                this.width / 2,
-                this.height / 2 - 40,
-                0xFFFFFF);
+        drawCenteredString(mc.fontRenderer, renderText, this.width / 2, this.height / 2 - 40, 0xFFFFFF);
         if (this.isMicrosoft) {
-            drawCenteredString(
-                    Minecraft.getMinecraft().fontRenderer,
-                    updateText.get(),
-                    this.width / 2,
-                    this.height / 2 - 28,
-                    0xFFFFFF);
+            drawCenteredString(mc.fontRenderer, updateText.get(), this.width / 2, this.height / 2 - 28, 0xFFFFFF);
         }
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
