@@ -11,7 +11,8 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
         name = "OAuth",
         acceptableRemoteVersions = "*",
         acceptedMinecraftVersions = "[1.7.10]",
-        version = Tags.VERSION)
+        version = Tags.VERSION,
+        dependencies = "required-after:gtnhlib;")
 public class OAuth {
 
     @Mod.EventHandler
