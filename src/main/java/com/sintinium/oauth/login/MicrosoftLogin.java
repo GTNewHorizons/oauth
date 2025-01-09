@@ -1,6 +1,5 @@
 package com.sintinium.oauth.login;
 
-import java.awt.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
@@ -33,9 +32,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
+import com.gtnewhorizon.gtnhlib.util.FilesUtil;
 import com.sun.net.httpserver.HttpServer;
-
-// import org.json.*;
 
 public class MicrosoftLogin {
 
@@ -44,16 +42,16 @@ public class MicrosoftLogin {
     private static final String authXsts = "https://xsts.auth.xboxlive.com/xsts/authorize";
     private static final String minecraftAuth = "https://api.minecraftservices.com/authentication/login_with_xbox";
     private static final String minecraftProfile = "https://api.minecraftservices.com/minecraft/profile";
-    private static String clientId = "907a248d-3eb5-4d01-99d2-ff72d79c5eb1";
-    private static String redirectDict = "relogin";
-    private static String redirect = "http://localhost:26669/" + redirectDict;
+    private static final String clientId = "907a248d-3eb5-4d01-99d2-ff72d79c5eb1";
+    private static final String redirectDict = "relogin";
+    private static final String redirect = "http://localhost:26669/" + redirectDict;
     // https://wiki.vg/Microsoft_Authentication_Scheme
     private static final String msAuthUrl = new UrlBuilder("https://login.live.com/oauth20_authorize.srf")
             .addParameter("client_id", clientId).addParameter("response_type", "code")
             .addParameter("redirect_uri", redirect).addParameter("scope", "XboxLive.signin%20offline_access").build();
-    private RequestConfig config = RequestConfig.custom().setConnectTimeout(30 * 1000).setSocketTimeout(30 * 1000)
+    private final RequestConfig config = RequestConfig.custom().setConnectTimeout(30 * 1000).setSocketTimeout(30 * 1000)
             .setConnectionRequestTimeout(30 * 1000).build();
-    private CloseableHttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+    private final CloseableHttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
     private boolean isCancelled = false;
     private String errorMsg = null;
     private boolean isDebug = false;
@@ -171,14 +169,7 @@ public class MicrosoftLogin {
             });
             server.setExecutor(null);
             server.start();
-            // Desktop.getDesktop().browse(new URI(msAuthUrl));
-
-            try {
-                Desktop.getDesktop().browse(new URI(msAuthUrl));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
+            FilesUtil.openUri(new URI(msAuthUrl));
             latch.await();
 
             return msCode.get();
