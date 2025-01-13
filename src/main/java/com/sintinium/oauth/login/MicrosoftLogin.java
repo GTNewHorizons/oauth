@@ -200,7 +200,6 @@ public class MicrosoftLogin {
                 // TODO: Throw readable exception!
                 throw new RuntimeException("No entity!");
             }
-            // System.out.println(EntityUtils.toString(response.getEntity()));
             JsonObject obj = parseObject(EntityUtils.toString(response.getEntity()));
             return new MsToken(obj.get("access_token").getAsString(), obj.get("refresh_token").getAsString());
         } catch (Exception e) {
@@ -344,8 +343,8 @@ public class MicrosoftLogin {
 
     private static class UrlBuilder {
 
-        private String url;
-        private Map<String, Object> parameters = new HashMap<>();
+        private final String url;
+        private final Map<String, Object> parameters = new HashMap<>();
 
         public UrlBuilder(String url) {
             this.url = url;
@@ -370,7 +369,7 @@ public class MicrosoftLogin {
         }
     }
 
-    public class MinecraftProfile {
+    public static class MinecraftProfile {
 
         public String name;
         public String id;
