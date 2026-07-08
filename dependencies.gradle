@@ -1,5 +1,0 @@
-// Add your dependencies here
-
-dependencies {
-    api("com.github.GTNewHorizons:GTNHLib:0.9.53:dev")
-}
